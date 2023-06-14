@@ -146,10 +146,30 @@
         })
         
         socket.newUser
+
+        // send the message and username info to the server,
+        // name and msg must contain input to work
+        sendButton.addEventListener('click', ()=>{
+            const name = nameTextbox.value;
+            const message = messageTextbox.value;
+
+            if (name === "" || message==="") {
+                alert("name and message inputs must contain input")
+            }
+            else {
+                const data = { name: name, message: message}
+                socket.emit('message', data)
+            }
+
+            nameTextbox.value = "";
+            messageTextbox.value = "";
+        })
         
         disconnectButton.addEventListener('click', () => {
             timeDisplay.innerText = "";
             usersDisplay.innerText = "";
+            nameTextbox.value = "";
+            messageTextbox.value = "";
             UIStatus(true);
             socket.disconnect();
             })
@@ -180,39 +200,21 @@
             timeDisplay.innerText = x;
         })
 
-
         // listen for server connections and update number of people in chat
         socket.on("whenUserConnected", (x) => {
            usersDisplay.innerText = x;
            })
 
-        
-
-        // send the message and username info to the server,
-        // name and msg must contain input to work
-        sendButton.addEventListener('click', ()=>{
-            const name = nameTextbox.value;
-            const message = messageTextbox.value;
-
-            if (name === "" || message==="") {
-                alert("name and message inputs must contain input")
-            }
-            else {
-                const data = { name: name, message: message}
-                socket.emit('message', data)
-            }
-        })
-
     })
 
     // scrollbar
-    const container = document.querySelector('.container');
-    if (container.scrollHeight <= container.clientHeight) 
-    {
-        container.classList.add('no-scroll');
-    } else {
-        container.classList('no-scroll');
-    }
+    // const container = document.querySelector('.container');
+    // if (container.scrollHeight <= container.clientHeight) 
+    // {
+    //     container.classList.add('no-scroll');
+    // } else {
+    //     container.classList('no-scroll');
+    // }
 
     </script>
 </body>
