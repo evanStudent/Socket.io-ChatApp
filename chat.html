@@ -145,7 +145,6 @@
             chatDisplay.appendChild(myP);
         })
         
-        socket.newUser
 
         // send the message and username info to the server,
         // name and msg must contain input to work
@@ -158,11 +157,11 @@
             }
             else {
                 const data = { name: name, message: message}
-                socket.emit('message', data)
+                socket.emit('message', data);
+                messageTextbox.value = "";
             }
 
-            nameTextbox.value = "";
-            messageTextbox.value = "";
+            
         })
         
         disconnectButton.addEventListener('click', () => {
